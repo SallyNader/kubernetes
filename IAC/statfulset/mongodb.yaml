@@ -18,14 +18,16 @@ spec:
           image: mongo
           ports:
             - containerPort: 27017
+         
           volumeMounts:
             - name: mongo-volume
-              mountPath: /data/db
+              mountPath: /mnt/efs/fs1/mongodb
   volumeClaimTemplates:
-    - metadata:
-        name: mongo-volume
-      spec:
-        accessModes: ["ReadWriteMany"]
-        resources:
-          requests:
-            storage: 1Gi
+  - metadata:
+      name: mongo-volume
+    spec:
+      accessModes: 
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: 5Mi

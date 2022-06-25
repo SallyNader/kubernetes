@@ -6,7 +6,7 @@ metadata:
   labels:
     app: nodejs
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: nodejs
@@ -18,7 +18,8 @@ spec:
       containers:
       - name: nodejs
         image: node
-        command: ["sh", "cd app && npm start"]
+        command: ["/bin/sh"]
+        args: ["-c", "cd /app && npm start"]
         stdin: true
         ports:
           - containerPort: 3000
@@ -27,5 +28,5 @@ spec:
           name: app-volume
       volumes:
       - name: app-volume
-        hostPath:
-          path: /home/sally/Documents/k-project              
+        persistentVolumeClaim:
+          claimName: pvc-nodejs              
